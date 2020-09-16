@@ -1,0 +1,5 @@
+tensorboardx
+opencv-python
+pyyaml
+pillow-simd   # faster backend for torchvision
+-e git+https://github.com/NVIDIA/apex.git#egg=apex

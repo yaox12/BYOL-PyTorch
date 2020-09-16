@@ -1,0 +1,50 @@
+model:
+  base_momentum: 0.99
+  backbone:
+    type: "resnet50"
+    pretrained: false
+  projection:
+    type: "MLP"
+    input_dim: 2048
+    hidden_dim: 4096
+    output_dim: 256
+  predictor:
+    type: "MLP"
+    input_dim: 256
+    hidden_dim: 4096
+    output_dim: 256
+
+amp:
+  sync_bn: True
+  opt_level: "O0"
+
+data:
+  image_dir: "/home/admin/workspace/shared/imagenet/"
+  resize_size: 224
+  data_workers: 8
+  train_batch_size: 128
+  val_batch_size: 64
+  dual_views: true
+  num_examples: 1281167
+
+optimizer:
+  type: lars
+  base_lr: 0.3
+  momentum: 0.9
+  weight_decay: 1.0e-6
+  total_epochs: 300
+  warmup_epochs: 10
+  exclude_bias_and_bn: true
+
+checkpoint:
+  time_stamp:
+  resume_path:
+  save_epoch: 1
+  ckpt_path: "ckpt/byol_imagenet/{}/{}_{}.pth.tar"
+
+log:
+  log_step: 10
+  log_dir:
+
+stage: "train"
+distributed: true
